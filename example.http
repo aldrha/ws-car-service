@@ -1,0 +1,18 @@
+POST http://localhost:3000/vehicles
+Content-Type: application/json
+
+{
+    "make": "Toyota",
+    "model": "Corolla",
+    "plate": "ABC-1234",
+    "initialMileage": 10000,
+    "currentMileage": 10000,
+    "lastServiceDate": "2022-01-01",
+    "lastServiceMileage": 10000,
+    "imageUrl": "https://example.com/image.jpg",
+    "userId": 1
+}
+
+GET http://localhost:3000/vehicles/user/1
+
+GET http://localhost:3000/vehicles/1

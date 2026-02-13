@@ -1,0 +1,44 @@
+import { Type } from "class-transformer";
+import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from "class-validator";
+
+export class CreateVehicleDto {
+    @IsString()
+    @IsNotEmpty()
+    make: string;
+
+    @IsString()
+    @IsNotEmpty()
+    model: string;
+
+    @IsString()
+    @IsNotEmpty()
+    plate: string;
+
+    @IsNumber()
+    @Min(0)
+    @IsNotEmpty()
+    initialMileage: number;
+
+    @IsNumber()
+    @Min(0)
+    @IsNotEmpty()
+    currentMileage: number;
+
+    @IsDate()
+    @IsNotEmpty()
+    @Type(() => Date)
+    lastServiceDate: Date;
+
+    @IsNumber()
+    @Min(0)
+    @IsNotEmpty()
+    lastServiceMileage: number;
+
+    @IsString()
+    @IsOptional()
+    imageUrl?: string;
+
+    @IsNumber()
+    @IsNotEmpty()
+    userId: number;
+}
