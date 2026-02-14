@@ -1,22 +1,33 @@
-import { Injectable } from "@nestjs/common";
-import { IVehicleRepository } from "./vehicle.repository";
-import { PrismaService } from "src/prisma/prisma.service";
-import { CreateVehicleDto } from "../dto/create-vehicle.dto";
-import { Vehicle } from "@prisma/client";
-import { UpdateVehicleDto } from "../dto/update-vehicle.dto";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateVehicleDto } from '../dto/create-vehicle.dto';
+import { IVehicleRepository } from './vehicle.repository';
 
+import { Vehicle } from 'src/generated/prisma/client';
+import { UpdateVehicleDto } from '../dto/update-vehicle.dto';
 
 @Injectable()
 export class PrismaVehicleRepository implements IVehicleRepository {
-
     constructor(private readonly prisma: PrismaService) { }
+
+    // src/modules/vehicles/repositories/prisma-vehicle.repository.ts
 
     async create(data: CreateVehicleDto, userId: number): Promise<Vehicle> {
         return this.prisma.vehicle.create({
             data: {
-                ...data,
-                userId
-            }
+                make: data.make,
+                model: data.model,
+                plate: data.plate,
+                initialMileage: data.initialMileage,
+                // Usamos ?? para asegurar que si viene undefined, se asigne el initialMileage
+                currentMileage: data.currentMileage ?? data.initialMileage,
+                lastServiceMileage: data.lastServiceMileage ?? data.initialMileage,
+                // Aseguramos la fecha
+                lastServiceDate: data.lastServiceDate ?? new Date(),
+                imageUrl: data.imageUrl ?? null,
+                // La relación con el usuario
+                userId: userId,
+            },
         });
     }
 
@@ -35,7 +46,7 @@ export class PrismaVehicleRepository implements IVehicleRepository {
     async update(id: number, data: UpdateVehicleDto): Promise<Vehicle> {
         return this.prisma.vehicle.update({
             where: { id },
-            data
+            data,
         });
     }
 

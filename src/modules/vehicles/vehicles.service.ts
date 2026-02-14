@@ -1,7 +1,8 @@
 import { ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaVehicleRepository } from './repositories/prisma-vehicle.repository';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
-import { Vehicle } from '@prisma/client';
+import { PrismaVehicleRepository } from './repositories/prisma-vehicle.repository';
+
+import { Vehicle } from 'src/generated/prisma/client';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 
 @Injectable()

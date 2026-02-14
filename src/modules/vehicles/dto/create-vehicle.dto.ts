@@ -1,5 +1,12 @@
-import { Type } from "class-transformer";
-import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from "class-validator";
+import { Type } from 'class-transformer';
+import {
+    IsDate,
+    IsNotEmpty,
+    IsNumber,
+    IsOptional,
+    IsString,
+    Min,
+} from 'class-validator';
 
 export class CreateVehicleDto {
     @IsString()
@@ -21,8 +28,8 @@ export class CreateVehicleDto {
 
     @IsNumber()
     @Min(0)
-    @IsNotEmpty()
-    currentMileage: number;
+    @IsOptional()
+    currentMileage?: number;
 
     @IsDate()
     @IsNotEmpty()
@@ -31,14 +38,10 @@ export class CreateVehicleDto {
 
     @IsNumber()
     @Min(0)
-    @IsNotEmpty()
-    lastServiceMileage: number;
+    @IsOptional()
+    lastServiceMileage?: number;
 
     @IsString()
     @IsOptional()
     imageUrl?: string;
-
-    @IsNumber()
-    @IsNotEmpty()
-    userId: number;
 }

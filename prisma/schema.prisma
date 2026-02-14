@@ -5,38 +5,40 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider     = "prisma-client"
-  output       = "../src/generated/prisma"
-  moduleFormat = "cjs"
+    provider     = "prisma-client"
+    output       = "../src/generated/prisma"
+    moduleFormat = "cjs"
 }
 
 datasource db {
-  provider = "mysql"
+    provider = "mysql"
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  username   String    @unique
-  phone      String
-  email      String    @unique
-  password   String
-  isVerified Boolean   @default(false)
-  vehicles   Vehicle[]
-  createdAt  DateTime  @default(now())
+    id         Int       @id @default(autoincrement())
+    username   String    @unique
+    phone      String
+    email      String    @unique
+    password   String
+    otpCode    String? // El código de 4 o 6 dígitos
+    otpExpires DateTime? // Fecha de expiración (ej: 10 minutos) 
+    isVerified Boolean   @default(false)
+    vehicles   Vehicle[]
+    createdAt  DateTime  @default(now())
 }
 
 model Vehicle {
-  id                 Int      @id @default(autoincrement())
-  make               String // Marca
-  model              String // Modelo
-  plate              String   @unique // Placa
-  initialMileage     Int
-  currentMileage     Int
-  lastServiceDate    DateTime
-  lastServiceMileage Int
-  imageUrl           String?
+    id                 Int      @id @default(autoincrement())
+    make               String // Marca
+    model              String // Modelo
+    plate              String   @unique // Placa
+    initialMileage     Int      @default(0)
+    currentMileage     Int
+    lastServiceDate    DateTime
+    lastServiceMileage Int
+    imageUrl           String?
 
-  // Relación con User
-  user   User @relation(fields: [userId], references: [id])
-  userId Int
+    // Relación con User
+    user   User @relation(fields: [userId], references: [id])
+    userId Int
 }
